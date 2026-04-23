@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Registration</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 2rem;
+    }
+    form {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      max-width: 400px;
+      margin: auto;
+    }
+    input {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 0.7rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+    <div style="text-align: center;">
+  <h1>Fogarty Onsite</h1>
+   <h1>Generator Service</h1>
+</div>
+  <form id="adminForm">
+    <div style="text-align: center;">
+  <h3>Create an account</h3>
+  <h5>Already have an account? <u>Login</u></h5>
+  href ="loginlink"
+</div>
+    <input type="text" id="fname" placeholder="First Name" required />
+    <input type="text" id="lname" placeholder="Last Name" required />
+    <input type="text" id="userID" placeholder="User ID" required />
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="number" id="phoneNumber" placeholder="Phone Number" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <div style="text-align: center;">
+    <button type="submit">Create Admin</button>
+    </div>
+  </form>
+
+  <p id="responseMsg"></p>
+
+  <script>
+    document.getElementById('adminForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const fname = document.getElementById('fname').value.trim();
+      const lname = document.getElementById('lname').value.trim();
+      const userID = document.getElementById('userID').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phoneNumber = document.getElementById('phoneNumber').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      const name = `${fname} ${lname}`;
+      const response = await fetch('/api/admins', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ name, userID, email, phoneNumber, password })
+      });
+
+      const result = await response.json();
+      document.getElementById('responseMsg').textContent = result.message || "Error creating admin.";
+    });
+  </script>
+</body>
+</html>
