@@ -23,11 +23,19 @@ runConfig:
   # - variable: MY_SECRET
   #   secret: mySecretRef
 env:
+  - variable: MONGODB_URI
+    secret: MONGODB_URI
   - variable: JWT_SECRET
     secret: JWT_SECRET
   - variable: AWS_ACCESS_KEY_ID
     secret: AWS_ACCESS_KEY_ID
   - variable: AWS_SECRET_ACCESS_KEY
     secret: AWS_SECRET_ACCESS_KEY
+  - variable: TWILIO_AUTH_TOKEN
+    secret: TWILIO_AUTH_TOKEN
+  - variable: COURIER_API_KEY
+    secret: COURIER_API_KEY
   - variable: WAVE_TOKEN
     secret: WAVE_TOKEN
+  - variable: CLIENT_ORIGIN
+    value: https://fogarty-onsite-generator.web.app

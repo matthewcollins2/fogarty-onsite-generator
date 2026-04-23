@@ -36,8 +36,8 @@ app.use(cors({ origin: process.env.CLIENT_ORIGIN || "*", credentials: true }));
 app.use(express.json()); // Fixes the 400 Bad Request error
 app.use(cookieParser());
 
-// Serve static files from the 'public' folder (from your server.js logic)
-app.use(express.static(path.join(__dirname, 'public')));
+// Serve static files from the 'dist' folder (Vite build output)
+app.use(express.static(path.join(__dirname, 'dist')));
 
 // --- Routes ---
 app.use('/api/admins', adminRoute);
@@ -56,13 +56,14 @@ app.use('/api/invoices', invoiceRoute);
 app.use('/api/invoice-products', invoiceProductRoute);
 
 
-app.get('/', (req, res) => {
-    res.send("Hello from the Unified Node API Server!");
+app.get('/api/*', (req, res) => {
+    res.status(404).json({ error: 'API route not found' });
 });
 
-// --- 404 Catch-all (Added from your server.js) ---
-app.use((req, res) => {
-    res.status(404).json({ error: '404 Not Found' });
+// --- SPA Catch-all ---
+// This serves index.html for any request that doesn't match an API route or static file
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 // --- Database Connection ---
